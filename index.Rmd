@@ -1,7 +1,7 @@
 ---
 title: "adminR"
 subtitle: "R in Official Statistics"
-date: "`Autumn Edition: 19. September 2019`"
+date: "`Virtual Spring Edition: 18. March 2021`"
 output:
   xaringan::moon_reader:
     css: libs/adminr_style.css
@@ -24,45 +24,43 @@ source("libs/render_toc.R")
 
 - <font > <b> adminR</b></font>
 
-- <font > <b> R at the Statistical Office of the Canton of Fribourg</b></font>, <br />
-Reto Messikommer
+- <font > <b> Building ships while weathering a storm, Arrr...R!</b></font>, <br />
+Perisa Damir and Katrin Schneider, BAG
 
-- <font > <b> Introducing the Group for Applied Statistics and Modeling</b></font>, <br />
-Laurent Donzé
 
-- <font > <b> Demographical Long-Term Financing of the Swiss Social Insurances</b></font>, <br />
-Layal Christine Lettry
 
-- <font > <b> Handling of spatial data with R at the Statistical Office of the Canton of Zurich</b></font>, <br />
-Katharina Kälin
 
-- <font > <b> Apéro</b></font>
+- <font > <b> Customized RMarkdown templates with indiedown</b></font>, <br />
+Angelica Becerra Garnica, cynkra
+
+- <font > <b> Break-Out Rooms, Virtual Apéro</b></font>
 
 ---
 
 
+
+
 # adminR
 ### Was
-- Halbjährliches Treffen irgendwo in der Schweiz, früh abends unter der Woche und informell.
+- Halbjährliches Treffen irgendwo in der Schweiz oder virtuell, früh abends unter der Woche und informell.
 
 - Möglichkeit zum Austausch mit anderen UseRn in der öffentlichen Verwaltung und verwandten Institutionen.
 
 - Methodische Aspekte stehen im Vordergrund. Wie wird R eingesetzt, für welche Aufgaben, welche Packages, wie sieht der Workflow aus, etc.?
 
 
-
 ### Wie
 
-- Themenvorträge (20 Min.) 
-- Lightning Talks (10 Min.): Institutionen stellen vor, wie sie R anwenden  
+- Themenvorträge (20 Min.)
+- Lightning Talks (10 Min.): Institutionen stellen vor, wie sie R anwenden
 
-Sprache: frei  
-
+Sprache: frei
 
 
 ---
 
 # adminR
+
 ### Wer
 
 Mitarbeitende der Öffentlichen Verwaltung oder verwandten Institutionen, die mit Daten der Öffentlichen Statistik arbeiten und dazu die Software R verwenden.
@@ -70,35 +68,50 @@ Mitarbeitende der Öffentlichen Verwaltung oder verwandten Institutionen, die mi
 
 ### Organisationsteam
 
-- Ronald Indergand, Staatssekretariat für Wirtschaft 
-- Christoph Sax, cynkra GmbH
 - Andrea Schnell, Statistisches Amt Kanton Zürich
+- Ronald Indergand, Staatssekretariat für Wirtschaft
+- Christoph Sax, cynkra GmbH
 
 Das  Organisationsteam sucht Gastgeber und Vortragende. Die Gastgeber stellen den Raum und die Verpflegung zur Verfügung.
 
 
+---
+
+# Nach Stadt
+
+```{r, echo = FALSE, out.width = "90%"}
+knitr::include_graphics("city.png")
+```
+
+---
+
+# Nach Geschlecht
+
+```{r, echo = FALSE, out.width = "90%"}
+knitr::include_graphics("gender.png")
+```
 
 
 
 ---
 
 
-background-image: url("libs/logo.png")  
+background-image: url("libs/logo.png")
 background-position: 50% 10%
 background-size: 30%
 class:  bottom, center, inverse
 
 <br>
 
-`r icon::fa_meetup(size = 2)`  https://www.meetup.com/adminr/
+`r fontawesome::fa("meetup", height = 50)`  https://www.meetup.com/adminr/
 
-`r icon::fa_github(size = 2)`  https://github.com/swiss-adminR
+`r fontawesome::fa("github", height = 50)`  https://github.com/swiss-adminR
 
-`r icon::fa_twitter(size = 2)`  https://twitter.com/adminR3
+`r fontawesome::fa("twitter", height = 50)`  https://twitter.com/adminR3
 
 <br>
 
-`r icon::fa_envelope(size = 2)`
+`r fontawesome::fa("envelope", height = 50)`  https://twitter.com/adminR3
 
 [Ronald](mailto:ronald.indergand@seco.admin.ch), [Christoph](mailto:christoph@cynkra.com), [Andrea](mailto:andrea.schnell@statistik.ji.zh.ch)
 

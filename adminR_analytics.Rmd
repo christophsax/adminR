@@ -20,15 +20,15 @@ library(tidyverse)
 library(magrittr)
 library(tidytext)
 
-urlname <- "adminR"
-(events <- get_events(urlname))
 
 adminr_members <- get_members("adminR")
 
 adminr_guests <- get_event_rsvps("adminR", "253930551") %>% # sept 2018
-                mutate(event = "Sept 2018") %>%
+                mutate(event = "2018, Sept") %>%
   bind_rows(get_event_rsvps("adminR", "258383370") %>% # march 2019
-                mutate(event = "March 2019"))
+                mutate(event = "2019, March")) %>%
+  bind_rows(get_event_rsvps("adminR", "276327919") %>% # march 2021
+                mutate(event = "2021, March"))
 
 # adminr_guests <- get_event_rsvps("adminR", "258383370")
 # %>% filter(response == "yes")
@@ -66,7 +66,7 @@ adminr_guests %>%
   arrange(member_id, desc(event)) %>%
   mutate(new = ifelse(first(anwesend) == 0 & last(anwesend)==1, 1, 0)) %>%
   ungroup() %>%
-  filter(event == "March 2019") %>%
+  filter(event == "March 2021") %>%
   filter(anwesend == 1) %>%
   View()
   summarise(new = sum(new))
@@ -77,15 +77,15 @@ adminr_guests %>% select(member_id, event)
 
 # City
 ```{r city}
-adminr_members %>% 
-  left_join(., adminr_guests, by = c('id' = 'member_id')) %>% 
-  filter(response == "yes") %>% 
-  group_by(city, event) %>% 
-  tally() %>% 
-  ungroup() %>% 
-  filter(n > 1) %>% 
-  complete(city, event, fill = list(n = 0)) %>% 
-  mutate(city = fct_reorder(city, n)) %>% 
+adminr_members %>%
+  left_join(., adminr_guests, by = c('id' = 'member_id')) %>%
+  filter(response == "yes") %>%
+  group_by(city, event) %>%
+  tally() %>%
+  ungroup() %>%
+  filter(n > 1) %>%
+  complete(city, event, fill = list(n = 0)) %>%
+  mutate(city = fct_reorder(city, n)) %>%
   ggplot(., aes(x = city, y = n, fill = event)) +
   geom_bar(stat = "identity",  position = "dodge")+
   # facet_wrap(~event)+
@@ -107,30 +107,30 @@ library(reshape2)
 
 
 
-vornamen <- readxl::read_xlsx("vornamen_geschlecht.xlsx") %>% 
+vornamen <- readxl::read_xlsx("vornamen_geschlecht.xlsx") %>%
   mutate(female  = as.numeric(female),
          male = as.numeric(male))
 
-gender_guess <- vornamen %>% 
-  mutate_all(funs(replace(., is.na(.), 0))) %>% 
-  group_by(name) %>% 
-  mutate(tot = sum(male, female, na.rm = T)) %>% 
-  mutate(prob_female = ifelse(is.na(female) == F, female/tot, male/tot)) %>% 
+gender_guess <- vornamen %>%
+  mutate_all(funs(replace(., is.na(.), 0))) %>%
+  group_by(name) %>%
+  mutate(tot = sum(male, female, na.rm = T)) %>%
+  mutate(prob_female = ifelse(is.na(female) == F, female/tot, male/tot)) %>%
   select(name, prob_female)
 
-gender <- adminr_guests %>% 
-    filter(response == "yes") %>% 
-  mutate(name = sub("\\s.*","",member_name)) %>% 
-  left_join(., gender_guess, by = c('name' = 'name')) %>% 
+gender <- adminr_guests %>%
+    filter(response == "yes") %>%
+  mutate(name = sub("\\s.*","",member_name)) %>%
+  left_join(., gender_guess, by = c('name' = 'name')) %>%
   mutate(gender = ifelse(prob_female >= 0.5, "Frau", "Mann"))
 
-gender_freq <- gender %>% 
-  group_by(name, gender, event) %>% 
-  summarise(n = n()) %>% 
+gender_freq <- gender %>%
+  group_by(name, gender, event) %>%
+  summarise(n = n()) %>%
   ungroup()
 
 
-gender %>% 
+gender %>%
   ggplot(., aes(x = gender, fill = gender))+
   geom_bar()+
   scale_fill_manual(values = c( "#F8766D", "#00BFC4"), na.value = "grey50")+
@@ -155,16 +155,16 @@ ids <- map_dfr(adminr_members$resource, extract, c("id", "name"))
 ttt <- data.frame(id = c(rep(NA, length(n_members))) , answer1 = c(rep(NA, length(n_members))), answer2 = c(rep(NA, length(n_members))))
 
 for (i in 1:length(n_members)){
-  
+
   if (is.null(adminr_members$resource[[i]]$group_profile$answers[[1]]$answer) == F ){
-    
-    t <- data_frame(id = adminr_members$resource[[i]]$id, 
+
+    t <- data_frame(id = adminr_members$resource[[i]]$id,
            answer1 = adminr_members$resource[[i]]$group_profile$answers[[1]]$answer,
            answer2 = adminr_members$resource[[i]]$group_profile$answers[[2]]$answer)
-    
+
   } else
     t <- data_frame(id = adminr_members$resource[[i]]$id, answer1 = NA, answer2 = NA)
-  
+
 t2 <- t
 
 ttt[i,] <- t2
@@ -186,16 +186,16 @@ ids <- left_join(ids, ttt, by = 'id')
 
 # wordcloud::wordcloud(gender_freq$name,freq = gender_freq$n, min.freq = 1)
 
-tab1 <- ttt %>% 
+tab1 <- ttt %>%
     inner_join(., adminr_guests %>%
     filter(response == "yes" & event == "March 2019"), by = c('id' = 'member_id')) %>%
-  mutate_at(vars(answer1, answer2), funs(tolower(.))) %>% 
-  unnest_tokens(word, answer1) %>% 
-  anti_join(get_stopwords(language = "en")) %>% 
-  anti_join(get_stopwords(language = "de")) %>% 
-  anti_join(get_stopwords(language = "fr")) %>% 
-  count(word, sort = TRUE) %>% 
-  filter(is.na(word)==F) %>% 
+  mutate_at(vars(answer1, answer2), funs(tolower(.))) %>%
+  unnest_tokens(word, answer1) %>%
+  anti_join(get_stopwords(language = "en")) %>%
+  anti_join(get_stopwords(language = "de")) %>%
+  anti_join(get_stopwords(language = "fr")) %>%
+  count(word, sort = TRUE) %>%
+  filter(is.na(word)==F) %>%
   mutate(word = toupper(word))
 
 # layout(matrix(c(1, 2), nrow=2), heights=c(1, 4))
@@ -212,17 +212,17 @@ wordcloud::wordcloud(tab1$word,freq = tab1$n, min.freq = 3)
 
 # Answer2
 ```{r answer2}
-tab2 <- ttt %>% 
+tab2 <- ttt %>%
     inner_join(., adminr_guests %>%
     filter(response == "yes" & event == "March 2019"), by = c('id' = 'member_id')) %>%
-  mutate_at(vars(answer1, answer2), funs(tolower(.))) %>% 
+  mutate_at(vars(answer1, answer2), funs(tolower(.))) %>%
   mutate(public = ifelse(is.na(answer2), NA,
                       ifelse(grepl("yes|ja|ou|kof|epfl|bfs|seco|statistik|snb|swiss national bank|ofs|university|universität|hochschule|bundesamt|federal|amt|fédéral", answer2), "ja", "nein")))
 
 
-tab2 %>% group_by(public) %>% 
-  tally() %>% 
-  ungroup() %>% 
+tab2 %>% group_by(public) %>%
+  tally() %>%
+  ungroup() %>%
   ggplot(., aes(x = public, y = n, fill = public))+
   geom_bar(stat = "identity")+
   scale_fill_manual(values = c("#00BFC4", "#F8766D"), na.value = "grey50")+
