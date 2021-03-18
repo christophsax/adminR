@@ -24,16 +24,33 @@ source("libs/render_toc.R")
 
 - <font > <b> adminR</b></font>
 
-- <font > <b> Building ships while weathering a storm, Arrr...R!</b></font>, <br />
-Perisa Damir and Katrin Schneider, BAG
+- <font > <b> Building ships while weathering a storm, Arrr...R!</b></font> <br />
+Damir Perisa and Katrin Schneider, BAG
 
 
 
 
-- <font > <b> Customized RMarkdown templates with indiedown</b></font>, <br />
+- <font > <b> Customized RMarkdown templates with indiedown</b></font> <br />
 Angelica Becerra Garnica, cynkra
 
 - <font > <b> Break-Out Rooms, Virtual Apéro</b></font>
+
+---
+
+# Break Out Rooms
+
+- <font > <b> BAG</b></font>
+moderiert
+
+- <font > <b> Indiedown</b></font>
+moderiert
+
+- <font > <b> Bar</b></font>
+nicht moderiert 🍻
+
+- <font > <b> Table 1 to 10</b></font>
+nicht moderiert
+
 
 ---
 
