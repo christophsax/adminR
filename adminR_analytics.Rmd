@@ -20,56 +20,54 @@ library(tidyverse)
 library(magrittr)
 library(tidytext)
 
-Sys.setenv(MEETUP_KEY = "36b7c9452951431a434a33123e42f")
-
 urlname <- "adminR"
 (events <- get_events(urlname))
 
 adminr_members <- get_members("adminR")
 
 adminr_guests <- get_event_rsvps("adminR", "253930551") %>% # sept 2018
-                mutate(event = "Sept 2018") %>% 
-  bind_rows(get_event_rsvps("adminR", "258383370") %>% # march 2019 
+                mutate(event = "Sept 2018") %>%
+  bind_rows(get_event_rsvps("adminR", "258383370") %>% # march 2019
                 mutate(event = "March 2019"))
 
 # adminr_guests <- get_event_rsvps("adminR", "258383370")
 # %>% filter(response == "yes")
 
 n_members <- adminr_members$id
-# 
+#
 # purrr::map()
-# 
-# 
+#
+#
 # mem_list <- adminr_members$resource %>% unlist(.$group_profile) %>% data_frame() %>% select(group_profile.answers.answer)
 # names(mem_list)
-# 
-# 
+#
+#
 # %>% filter(id == 189064954)
 
 
-# 
+#
 # adminr_members$resource[[91]]$group_profile$answers[[1]]$answer
-# 
+#
 # adminr_members$resource[[91]]$group_profile$answers[[2]]$answer
-# 
-# 
+#
+#
 # str(adminr_members$resource)
 ```
 
 # Newbies
 ```{r}
-adminr_guests %>% 
-  filter(response == "yes") %>% 
-  group_by(member_id, event) %>% 
-  summarise(anwesend = 1) %>% 
-  ungroup() %>% 
-  complete(member_id, event, fill = list(anwesend = 0)) %>% 
-  group_by(member_id) %>%  
-  arrange(member_id, desc(event)) %>% 
-  mutate(new = ifelse(first(anwesend) == 0 & last(anwesend)==1, 1, 0)) %>% 
-  ungroup() %>% 
+adminr_guests %>%
+  filter(response == "yes") %>%
+  group_by(member_id, event) %>%
+  summarise(anwesend = 1) %>%
+  ungroup() %>%
+  complete(member_id, event, fill = list(anwesend = 0)) %>%
+  group_by(member_id) %>%
+  arrange(member_id, desc(event)) %>%
+  mutate(new = ifelse(first(anwesend) == 0 & last(anwesend)==1, 1, 0)) %>%
+  ungroup() %>%
   filter(event == "March 2019") %>%
-  filter(anwesend == 1) %>% 
+  filter(anwesend == 1) %>%
   View()
   summarise(new = sum(new))
 
