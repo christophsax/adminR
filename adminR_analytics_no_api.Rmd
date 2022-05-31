@@ -73,6 +73,6 @@ gender %>%
   theme(legend.position = "none")
 
 
+ggsave("gender_today.png")
 
-
-
+```

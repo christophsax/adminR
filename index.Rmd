@@ -1,7 +1,7 @@
 ---
 title: "adminR"
-subtitle: "R in Official Statistics"
-date: "`Virtual Spring Edition: 18. March 2021`"
+subtitle: "R in Swiss Official Statistics"
+date: "`Spring Edition: 31. May 2022`"
 output:
   xaringan::moon_reader:
     css: libs/adminr_style.css
@@ -22,44 +22,31 @@ source("libs/render_toc.R")
 
 # Programm
 
-- <font > <b> adminR</b></font>
+- <font > <b> Intro</b></font>
 
-- <font > <b> Building ships while weathering a storm, Arrr...R!</b></font> <br />
-Damir Perisa and Katrin Schneider, BAG
-
-
+- <font > <b> R change management – a brief overview</b></font> <br />
+Andrea R. Plüss, Statistik Aargau
 
 
-- <font > <b> Customized RMarkdown templates with indiedown</b></font> <br />
-Angelica Becerra Garnica, cynkra
 
-- <font > <b> Break-Out Rooms, Virtual Apéro</b></font>
 
----
+- <font > <b> Knowledge-Management & latest steps of the R-Transformation at Statistik Aargau</b></font> <br />
+Jan Wunder, Niklas Haffert, Tina Cornioley
 
-# Break Out Rooms
 
-- <font > <b> BAG</b></font>
-moderiert
+- <font > <b> Payments Analysis with R at the SNB</b></font> <br />
+Christoph Meyer, Schweizerische Nationalbank
 
-- <font > <b> Indiedown</b></font>
-moderiert
 
-- <font > <b> Bar</b></font>
-nicht moderiert 🍻
-
-- <font > <b> Table 1 to 10</b></font>
-nicht moderiert
-
+- <font > <b> Apéro</b></font>
 
 ---
-
 
 
 
 # adminR
 ### Was
-- Halbjährliches Treffen irgendwo in der Schweiz oder virtuell, früh abends unter der Woche und informell.
+- Halbjährliches Treffen irgendwo in der Schweiz, früh abends unter der Woche und informell.
 
 - Möglichkeit zum Austausch mit anderen UseRn in der öffentlichen Verwaltung und verwandten Institutionen.
 
@@ -91,27 +78,16 @@ Mitarbeitende der Öffentlichen Verwaltung oder verwandten Institutionen, die mi
 
 Das  Organisationsteam sucht Gastgeber und Vortragende. Die Gastgeber stellen den Raum und die Verpflegung zur Verfügung.
 
-
----
-
-# Nach Stadt
-
-```{r, echo = FALSE, out.width = "90%"}
-knitr::include_graphics("city.png")
-```
-
 ---
 
 # Nach Geschlecht
 
-```{r, echo = FALSE, out.width = "90%"}
-knitr::include_graphics("gender.png")
+```{r, echo = FALSE, out.width = "60%"}
+knitr::include_graphics("gender_today.png")
 ```
 
 
-
 ---
-
 
 background-image: url("libs/logo.png")
 background-position: 50% 10%
@@ -120,15 +96,15 @@ class:  bottom, center, inverse
 
 <br>
 
-`r fontawesome::fa("meetup", height = 50)`  https://www.meetup.com/adminr/
+`r fontawesome::fa("meetup", height = "25px")`  https://www.meetup.com/adminr/
 
-`r fontawesome::fa("github", height = 50)`  https://github.com/swiss-adminR
+`r fontawesome::fa("github", height = "25px")`  https://github.com/swiss-adminR
 
-`r fontawesome::fa("twitter", height = 50)`  https://twitter.com/adminR3
+`r fontawesome::fa("twitter", height = "25px")`  https://twitter.com/adminR3
 
 <br>
 
-`r fontawesome::fa("envelope", height = 50)`  https://twitter.com/adminR3
+`r fontawesome::fa("envelope", height = "25px")`  https://twitter.com/adminR3
 
 [Ronald](mailto:ronald.indergand@seco.admin.ch), [Christoph](mailto:christoph@cynkra.com), [Andrea](mailto:andrea.schnell@statistik.ji.zh.ch)
 
