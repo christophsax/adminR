@@ -1,0 +1,78 @@
+---
+title: "adminR Meetup Analytics"
+author: "Andrea Schnell"
+output:
+  html_document:
+    self_contained: false
+---
+
+```{r setup}
+
+knitr::opts_chunk$set(fig.width=6,  echo = FALSE, dev = 'png')
+
+
+```
+
+
+```{r}
+#  library(meetupr) no longer works: https://github.com/rladies/meetupr
+library(tidyverse)
+library(magrittr)
+library(tidytext)
+
+
+
+# Manual download, store in 'data'
+
+# I got an `.xls` ending but the file is a tab separated text file
+
+adminr_guests <-
+  readr::read_delim("data/R_in_Swiss_Official_Statistics_Spring_Meetup_.tsv") |>
+  rename(
+    member_name = `Name`,
+    response = `RSVP`,
+    member_id = `User ID`
+  ) |>
+  mutate(response = tolower(response))
+
+
+# we can still produce the gender graph but not much else
+
+
+vornamen <- readxl::read_xlsx("vornamen_geschlecht.xlsx") %>%
+  mutate(female  = as.numeric(female),
+         male = as.numeric(male))
+
+gender_guess <- vornamen %>%
+  mutate_all(funs(replace(., is.na(.), 0))) %>%
+  group_by(name) %>%
+  mutate(tot = sum(male, female, na.rm = T)) %>%
+  mutate(prob_female = ifelse(is.na(female) == F, female/tot, male/tot)) %>%
+  select(name, prob_female)
+
+gender <- adminr_guests %>%
+    filter(response == "yes") %>%
+  mutate(name = sub("\\s.*","",member_name)) %>%
+  left_join(., gender_guess, by = c('name' = 'name')) %>%
+  mutate(gender = ifelse(prob_female >= 0.5, "Frau", "Mann"))
+
+gender_freq <- gender %>%
+  mutate(event = "Today") |>
+  group_by(name, gender, event) %>%
+  summarise(n = n()) %>%
+  ungroup()
+
+
+gender %>%
+  ggplot(., aes(x = gender, fill = gender))+
+  geom_bar()+
+  scale_fill_manual(values = c( "#F8766D", "#00BFC4"), na.value = "grey50")+
+  labs(x = NULL, y = NULL, fill = NULL)+
+  # facet_wrap(~event)+
+  theme_minimal(base_size = 18) +
+  theme(legend.position = "none")
+
+
+
+
+
